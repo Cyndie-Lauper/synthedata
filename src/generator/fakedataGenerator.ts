@@ -13,7 +13,7 @@ export class FakedataGenerator {
     count: number,
     context?: Record<string, any>
   ): Promise<z.infer<T>[]> {
-    const modelName = (schema._def as any).typeName?.replace("ZodObject", "") || 'UnknownModel';
+    const modelName = (schema.description as string) || 'UnknownModel';
     console.log(`Starting creating ${count} records for schema '${modelName}'...`);
 
     const promises: Promise<z.infer<T>>[] = [];
@@ -88,16 +88,21 @@ export class FakedataGenerator {
     }
 
     if (fieldDef.typeName === 'ZodEnum') {
-      prompt += `. Value must be one of the following options: ${(fieldDef as ZodEnum<any>).options.join(", ")}`;
+      const options = (fieldDef as any).options ?? (fieldDef as any).values;
+      if (Array.isArray(options)) {
+        prompt += `. Value must be one of the following options: ${options.join(", ")}`;
+      }
     }
 
     if (fieldDef.typeName === 'ZodString') {
-      const checks = (fieldDef as ZodString)._def.checks;
-      checks.forEach(check => {
-        if (check.kind === 'max') prompt += `. Maximum length is ${check.value} characters.`;
-        if (check.kind === 'min') prompt += `. Minimum length is ${check.value} characters.`;
-        if (check.kind === 'email') prompt += `. Must be a valid email address.`;
-      });
+      const checks = (fieldDef as any).checks ?? (fieldDef as any)._def?.checks;
+      if (Array.isArray(checks)) {
+        checks.forEach((check: any) => {
+          if (check.kind === 'max') prompt += `. Maximum length is ${check.value} characters.`;
+          if (check.kind === 'min') prompt += `. Minimum length is ${check.value} characters.`;
+          if (check.kind === 'email') prompt += `. Must be a valid email address.`;
+        });
+      }
     }
 
     return prompt;
