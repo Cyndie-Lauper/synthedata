@@ -1,6 +1,6 @@
 {
   "name": "@cyndie/synthedata",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "An AI-powered library to generate realistic fake data using Zod schemas.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
