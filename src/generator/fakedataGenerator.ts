@@ -1,5 +1,7 @@
-import { z, ZodTypeAny, ZodObject, ZodEnum, ZodString } from "zod";
+import { z, ZodTypeAny, ZodObject } from "zod";
 import { AIProvider } from "../ai/aiProvider";
+import * as fs from 'fs';
+import { Parser as Json2csvParser } from 'json2csv';
 
 type GeneratedDataCache = { [key: string]: any[] };
 
@@ -107,4 +109,20 @@ export class FakedataGenerator {
 
     return prompt;
   }
+
+  async exportDataToFile(modelName: string, filePath: string, format: 'json' | 'csv') {
+    const data = this.generatedData[modelName];
+    if (!data) {
+        throw new Error(`No data found for model: ${modelName}`);
+    }
+    if (format === 'json') {
+        fs.writeFileSync(filePath, JSON.stringify(data, null, 2), 'utf-8');
+    } else if (format === 'csv') {
+        const json2csvParser = new Json2csvParser();
+        const csv = json2csvParser.parse(data);
+        fs.writeFileSync(filePath, csv, 'utf-8');
+    } else {
+        throw new Error('Unsupported format');
+    }
+}
 }
