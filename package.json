@@ -1,6 +1,6 @@
 {
   "name": "@cyndie/synthedata",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "An AI-powered library to generate realistic fake data using Zod schemas.",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -24,6 +24,9 @@
   "license": "ISC",
   "dependencies": {
     "@google/generative-ai": "^0.14.1",
+    "@types/json2csv": "^5.0.7",
+    "fs": "^0.0.1-security",
+    "json2csv": "^6.0.0-alpha.2",
     "zod": "^3.23.8"
   },
   "devDependencies": {
