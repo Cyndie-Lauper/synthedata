@@ -1,0 +1,1 @@
+export { FakedataGenerator } from './fakedataGenerator';
