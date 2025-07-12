@@ -22,7 +22,6 @@ Install the package using npm or your favorite package manager:
 npm i @cyndie/synthedata
 ```
 
-> **Note:** Replace `@cyndie/synthedata` with the actual name of your package on npm.
 
 ### 🔑 Setup: Gemini API Key
 
