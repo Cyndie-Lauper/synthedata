@@ -100,6 +100,41 @@ async function generateMockData() {
 generateMockData();
 ```
 
+### 📤 Exporting Generated Data to File (JSON/CSV)
+
+After generating your data, you can easily export the sample data to a JSON or CSV file using the `exportDataToFile` method:
+
+```typescript
+// After generating data as shown above
+await generator.exportDataToFile('User', './output/users.json', 'json'); // Export to JSON file
+await generator.exportDataToFile('User', './output/users.csv', 'csv');   // Export to CSV file
+```
+
+- The first parameter: the model name (e.g., `'User'`, `'Post'`), which should match the schema's description or default name.
+- The second parameter: the file path where you want to save the data.
+- The third parameter: the file format, either `'json'` or `'csv'`.
+
+**Note:**
+- The output directory must exist before writing the file.
+- Make sure you have installed the `json2csv` package if you want to export to CSV:
+  ```bash
+  npm install json2csv
+  ```
+
+#### Full Example
+
+```typescript
+// ... generate data as shown in the previous example ...
+
+// Export user data to a JSON file
+await generator.exportDataToFile('User', './output/users.json', 'json');
+
+// Export post data to a CSV file
+await generator.exportDataToFile('Post', './output/posts.csv', 'csv');
+```
+
+---
+
 ### API Reference
 
 #### `FakedataGenerator`
