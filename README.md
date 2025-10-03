@@ -70,11 +70,13 @@ const PostSchema = z.object({
     userId: z.number().describe('UserSchema'),
 });
 
+const genAI = new GeminiProvider();
+
 // Define an async function to run the generator
 async function generateMockData() {
     try {
         // 2. Instantiate the generator with an AI provider
-        const generator = new FakedataGenerator(new GeminiProvider());
+        const generator = new FakedataGenerator(genAI);
 
         // 3. (Optional) Provide a general context to make the data more specific
         const context = { topic: "the future of renewable energy" };
